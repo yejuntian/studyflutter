@@ -40,7 +40,7 @@ void main() {
   print(point1 == point2);
 
   //工厂构造函数
-  print(Manager.get());
+  print(Manager.getInstance());
 }
 
 //工厂构造方法，必须返回一个实例对象
@@ -48,11 +48,14 @@ class Manager {
   //1.工厂构造函数->使用factory关键字命名的构造方法
   //2.工厂构造函数->必须返回它的实力对象，或者它子类对象
 
-  static late Manager _instance;
+  // 用 ? 表示 _instance 可以是 null
+  static Manager? _instance;
 
   factory Manager.getInstance() {
+    // 使用 ??= 延迟初始化
     _instance ??= Manager._newInstance();
-    return _instance;
+    // 用 ! 表示“我确认此时不为 null”再返回
+    return _instance!;
   }
 
   Manager._newInstance();

@@ -1,4 +1,5 @@
-import 'package:studyflutter/%E7%B1%BB/point.dart';
+
+import '1-1构造方法point.dart';
 
 void main() {
   var point = new Point(1, 2);
