@@ -23,3 +23,19 @@ class Point {
   //重定向构造方法
   Point.init2(int x) : this(x, 1);
 }
+
+class ImmutablePoint {
+  final int x;
+  final int y;
+
+  //常量构造方法
+  const ImmutablePoint(this.x, this.y);
+}
+
+void main() {
+  //使用const创建对象（前提条件：必须定义常量构造函数），传递参数也一样，创建的对象则是一个编译器常量对象
+  var point1 = const ImmutablePoint(1, 1);
+  var point2 = const ImmutablePoint(1, 1);
+  print(point1.hashCode == point2.hashCode);
+  print(point1 == point2);
+}
