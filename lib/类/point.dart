@@ -14,4 +14,9 @@ class Point {
   Point.Y(this.y) : _x = 0;
 
   Point.X(this._x) : y = 1;
+
+  //参数初始化列表-》初始化类的属性
+  Point.fromMap(Map map)
+      : _x = map['x'],
+        y = map['y'];
 }
