@@ -6,7 +6,7 @@ class Point {
 
   Point(this._x, this.y);
 
-  //命名多个构造方法
+  //重命名多个构造方法
   Point.init()
       : _x = -1,
         y = -2;
@@ -38,4 +38,22 @@ void main() {
   var point2 = const ImmutablePoint(1, 1);
   print(point1.hashCode == point2.hashCode);
   print(point1 == point2);
+
+  //工厂构造函数
+  print(Manager.get());
+}
+
+//工厂构造方法，必须返回一个实例对象
+class Manager {
+  //1.工厂构造函数->使用factory关键字命名的构造方法
+  //2.工厂构造函数->必须返回它的实力对象，或者它子类对象
+
+  static late Manager _instance;
+
+  factory Manager.getInstance() {
+    _instance ??= Manager._newInstance();
+    return _instance;
+  }
+
+  Manager._newInstance();
 }
