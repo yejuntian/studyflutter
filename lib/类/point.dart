@@ -19,4 +19,7 @@ class Point {
   Point.fromMap(Map map)
       : _x = map['x'],
         y = map['y'];
+
+  //重定向构造方法
+  Point.init2(int x) : this(x, 1);
 }
