@@ -1,6 +1,8 @@
 import 'dart:isolate';
 
 /*
+
+  截图图片-->异步/isolate.png
   IsoLate:Dart中的并发机制，类似Android主线中的main()函数，
   和java Thread不同的是Dart中的IsoLate是无法共享内存的。
 */
