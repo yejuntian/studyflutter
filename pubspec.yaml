@@ -32,7 +32,7 @@ dependencies:
     sdk: flutter
   dio: ^5.8.0+1
   path_provider: ^2.1.2   # 或最新版本
-  file_picker: ^6.1.1
+  file_picker: ^10.2.0
   permission_handler: ^11.3.1 # 若要读写权限（Android 13+ 强制要求）
 
   # The following adds the Cupertino Icons font to your application.
