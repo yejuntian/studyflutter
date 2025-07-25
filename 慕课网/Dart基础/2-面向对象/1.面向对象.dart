@@ -17,7 +17,7 @@ class Person {
 class Student extends Person {
   //定义类的变量
   String? _school; //通过下划线来标识私有字段（变量）
-  String? city;
+  final String? city;
   String? country;
 
   //通过this._school初始化自有参数
@@ -36,8 +36,14 @@ class Student extends Person {
 
   //命名构造方法：[类名+.+方法名]
   //使用命名构造方法为类实现多个构造方法
-  Student.cover(Student stu) : super(stu.name, stu.age) {
+  Student.cover(Student stu, this.city) : super(stu.name, stu.age) {
     print("命名构造方法");
+  }
+
+  //命名工厂构造方法：factory[类名+.+方法名]
+  //它可以有返回值，并且不需要将类的final变量作为命名工厂构造方法 的参数。
+  factory Student.stu(Student student) {
+    return Student(student._school, student.name, student.age);
   }
 }
 
@@ -59,5 +65,4 @@ class Logger {
   void log(String message) {
     print(message);
   }
-
 }
