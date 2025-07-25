@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '1-数字类型.dart';
+import '1-常用数据类型/1-数字类型.dart';
 
 void main() {
   runApp(const MainPage());
