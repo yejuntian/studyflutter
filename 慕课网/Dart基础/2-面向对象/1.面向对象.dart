@@ -92,10 +92,25 @@ abstract class Study {
 }
 
 //继承抽象类要实现它的抽象方法，否则也需要将自己定义为抽象类
-class StudyFlutter extends Study{
+class StudyFlutter extends Study {
   @override
   void study() {
     print("Learning Flutter");
   }
+}
 
+//使用mixin关键字定义类
+mixin Study2 {
+  // 抽象方法可以定义在 mixin 中
+  void study();
+}
+
+//mixins 是在多个类层次结构中重用代码的一种方式
+//要使用mixins，在with关键字后面跟上一个或多个mixin的名字(名字用逗号分隔),并且with要用在extents关键字之后
+//mixins的特征:实现mixins就创建一个集成Object类的子类(不能继承其他类),不声明任何构造方法,不调用super
+class Test extends Person with Study2 {
+  Test(super.name, super.age);
+
+  @override
+  void study() {}
 }
