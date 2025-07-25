@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '1-常用数据类型/1-数字类型.dart';
 import '2-面向对象/1.面向对象.dart';
+import '2-面向对象/2.函数.dart';
+import '2-面向对象/3.泛型.dart';
 
 void main() {
   runApp(const MainPage());
@@ -38,14 +40,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     _oopLearn();
+    _functionLearn();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
         child: ListView(
-          children: const [DataType()],
-        ),
+            //先注释掉，
+            // children: const [DataType()],
+            ),
       ),
     );
   }
@@ -68,5 +72,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
     StudyFlutter studyFlutter = StudyFlutter();
     studyFlutter.study();
+  }
+
+  void _functionLearn() {
+    print("*********Flutter函数************");
+    TestFunction testFunction = TestFunction();
+    testFunction.start();
+
+    TestGeneric testGeneric = TestGeneric();
+    testGeneric.start();
   }
 }
