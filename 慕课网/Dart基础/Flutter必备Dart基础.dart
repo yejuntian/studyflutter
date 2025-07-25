@@ -63,8 +63,10 @@ class _MyHomePageState extends State<MyHomePage> {
     stu1.school = '985';
     print(stu1.toString());
 
-
-    Student stu2 = Student("北大 ", "Tom", 16,city: '上海',country: '中国');
+    Student stu2 = Student("北大 ", "Tom", 16, city: '上海', country: '中国');
     print(stu2.toString());
+
+    StudyFlutter studyFlutter = StudyFlutter();
+    studyFlutter.study();
   }
 }
