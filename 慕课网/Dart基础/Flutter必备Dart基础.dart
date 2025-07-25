@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '1-常用数据类型/1-数字类型.dart';
+import '2-面向对象/1.面向对象.dart';
 
 void main() {
   runApp(const MainPage());
@@ -36,6 +37,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    _oopLearn();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -46,5 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  void _oopLearn() {
+    print("*********面向对象->工程模式************");
+    var log1 = Logger();
+    var log2 = Logger();
+    print(log1 == log2);
   }
 }

@@ -40,3 +40,24 @@ class Student extends Person {
     print("命名构造方法");
   }
 }
+
+class Logger {
+  static Logger? _logger;
+
+  /**
+      工厂构造方法：
+      不仅仅是构造方法，更是一种模式，有时候返回一个之前已经创建的缓存对象，原始的构造方法不能满足要求，
+      那么可以使用工厂模式来定义构造方法。
+   */
+  factory Logger() {
+    _logger ??= Logger._internal();
+    return _logger!;
+  }
+
+  Logger._internal();
+
+  void log(String message) {
+    print(message);
+  }
+
+}
