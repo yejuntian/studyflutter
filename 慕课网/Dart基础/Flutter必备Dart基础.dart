@@ -55,5 +55,16 @@ class _MyHomePageState extends State<MyHomePage> {
     var log1 = Logger();
     var log2 = Logger();
     print(log1 == log2);
+
+    Student.doPrint("_oopLearn");
+
+    //创建Student对象
+    Student stu1 = Student("清华", "jack", 18);
+    stu1.school = '985';
+    print(stu1.toString());
+
+
+    Student stu2 = Student("北大 ", "Tom", 16,city: '上海',country: '中国');
+    print(stu2.toString());
   }
 }

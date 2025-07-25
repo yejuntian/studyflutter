@@ -53,6 +53,16 @@ class Student extends Person {
   set school(String? value) {
     _school = value;
   }
+
+  //静态方法
+  static doPrint(String message) {
+    print("print:$message");
+  }
+
+  @override
+  String toString() {
+    return "name:$name school:${this._school},city:$city,country:$country ${super.toString()}";
+  }
 }
 
 class Logger {
