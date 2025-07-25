@@ -45,6 +45,14 @@ class Student extends Person {
   factory Student.stu(Student student) {
     return Student(student._school, student.name, student.age);
   }
+
+//可以为私有字段设置getter来让外界获取到私有字段
+  String? get school => _school;
+
+  //可以为私有字段设置setter来让外界对私有字段进行修改
+  set school(String? value) {
+    _school = value;
+  }
 }
 
 class Logger {
