@@ -6,6 +6,7 @@ import '3-UI组件/3.Fullter布局组件.dart';
 import '3-UI组件/4.Gesture检查用户手势以及处理点击事件.dart';
 import '3-UI组件/5.如何导入和使用Flutter的资源文件.dart';
 import '3-UI组件/6.Flutter如何打开第三方应用？.dart';
+import '3-UI组件/7.Flutter页面生命周期.dart';
 
 void main() {
   runApp(const DynamicTheme());
@@ -39,6 +40,7 @@ class _DynamicThemeState extends State<DynamicTheme> {
         "gesture": (context) => const GesturePage(),
         "res": (context) => const ResPage(),
         "launch": (context) => const LauncherPage(),
+        "widgetLifecycle": (context) => const WidgetLifecycle(),
       },
     );
   }
@@ -74,6 +76,7 @@ class _RouteNavigatorState extends State<RouteNavigator> {
         _item('如何检测用户手势以及处理点击事件？', const GesturePage(), 'gesture'),
         _item('如何导入和使用Flutter的资源文件？', const ResPage(), 'res'),
         _item('如何打开第三方应用？', const LauncherPage(), 'launch'),
+        _item('Flutter页面生命周期', const WidgetLifecycle(), 'widgetLifecycle'),
       ],
     );
   }
