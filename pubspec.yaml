@@ -34,6 +34,7 @@ dependencies:
   path_provider: ^2.1.2   # 或最新版本
   file_picker: ^10.2.0
   permission_handler: ^11.3.1 # 若要读写权限（Android 13+ 强制要求）
+  url_launcher: ^6.3.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
