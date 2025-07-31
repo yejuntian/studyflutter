@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '3-UI组件/1.statelessWidget相关组件.dart';
 import '3-UI组件/2.StatefulWidget相关组件.dart';
 import '3-UI组件/3.Fullter布局组件.dart';
+import '3-UI组件/4.Gesture检查用户手势以及处理点击事件.dart';
 
 void main() {
   runApp(const DynamicTheme());
@@ -33,6 +34,7 @@ class _DynamicThemeState extends State<DynamicTheme> {
         "less": (context) => const LessGroupPage(),
         "ful": (context) => const StatefulGroup(),
         "layout": (context) => const FlutterLayoutPage(),
+        "gesture": (context) => const GesturePage(),
       },
     );
   }
@@ -65,6 +67,7 @@ class _RouteNavigatorState extends State<RouteNavigator> {
         _item('StatelessWidget与基础组件', const LessGroupPage(), 'less'),
         _item('StatefulWidget与基础组件', const StatefulGroup(), 'ful'),
         _item('Flutter布局开发', const FlutterLayoutPage(), 'layout'),
+        _item('如何检测用户手势以及处理点击事件？', const GesturePage(), 'gesture'),
       ],
     );
   }
