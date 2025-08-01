@@ -21,17 +21,42 @@ class DynamicTheme extends StatefulWidget {
 }
 
 class _DynamicThemeState extends State<DynamicTheme> {
+  Brightness _brightness = Brightness.light;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Flutter Demo",
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        brightness: _brightness,
+        primarySwatch: Colors.blue,
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text("如何创建和使用Flutter的路由与导航？"),
         ),
-        body: const Column(
-          children: [RouteNavigator()],
+        body: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  if (_brightness == Brightness.light) {
+                    _brightness = Brightness.dark;
+                  } else {
+                    _brightness = Brightness.light;
+                  }
+                });
+              },
+              child: Text(
+                _brightness == Brightness.light ? "切换夜间模式" : "切换白天模式",
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.blue,
+                ),
+              ),
+            ),
+            const RouteNavigator(),
+          ],
         ),
       ),
       routes: {
