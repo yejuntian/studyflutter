@@ -28,6 +28,8 @@ class _DynamicThemeState extends State<DynamicTheme> {
     return MaterialApp(
       title: "Flutter Demo",
       theme: ThemeData(
+        //将字体应用到全局
+        // fontFamily: "Default-Bold",
         brightness: _brightness,
         primarySwatch: Colors.blue,
       ),
@@ -48,10 +50,14 @@ class _DynamicThemeState extends State<DynamicTheme> {
                 });
               },
               child: Text(
-                _brightness == Brightness.light ? "切换夜间模式" : "切换白天模式",
+                _brightness == Brightness.light
+                    ? "切换夜间模式(DarkModel)"
+                    : "切换白天模式(LightModel)",
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.blue,
+                  //将字体应用到UI设计要求的地方
+                  fontFamily: "Default-Bold",
                 ),
               ),
             ),
