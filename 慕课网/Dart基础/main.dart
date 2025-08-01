@@ -8,6 +8,7 @@ import '3-UI组件/5.如何导入和使用Flutter的资源文件.dart';
 import '3-UI组件/6.Flutter如何打开第三方应用？.dart';
 import '3-UI组件/7.Flutter页面生命周期.dart';
 import '3-UI组件/8.获取Flutter应用的生命周期.dart';
+import '3-UI组件/9.实战拍照APP开发.dart';
 
 void main() {
   runApp(const DynamicTheme());
@@ -74,6 +75,7 @@ class _DynamicThemeState extends State<DynamicTheme> {
         "launch": (context) => const LauncherPage(),
         "widgetLifecycle": (context) => const WidgetLifecycle(),
         "appLifecycle": (context) => const AppLifecycle(),
+        "takePhoto": (context) => const PhotoApp(),
       },
     );
   }
@@ -111,6 +113,7 @@ class _RouteNavigatorState extends State<RouteNavigator> {
         _item('如何打开第三方应用？', const LauncherPage(), 'launch'),
         _item('Flutter页面生命周期', const WidgetLifecycle(), 'widgetLifecycle'),
         _item('Flutter应用生命周期', const AppLifecycle(), 'appLifecycle'),
+        _item('实战拍照APP开发', const PhotoApp(), 'takePhoto'),
       ],
     );
   }
