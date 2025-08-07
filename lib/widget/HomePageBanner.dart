@@ -23,25 +23,28 @@ class _HomePageBannerState extends State<HomePageBanner> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CarouselSlider(
-          carouselController: _buttonCarouselController,
-          options: CarouselOptions(
-            onPageChanged: (int index, CarouselPageChangedReason reason) {
-              _buttonCarouselController.jumpToPage(index);
-              setState(() {
-                _currentBannerIndex = index;
-              });
-            },
-            initialPage: _currentBannerIndex,
-            // ⚠️ 设置为 false，避免缩放效果带来的边距
-            enlargeCenterPage: false,
-            // ✅ 关键设置：让每页占满屏幕宽度
-            viewportFraction: 1.0,
-            aspectRatio: 16 / 9,
-            autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 3),
+        FractionallySizedBox(
+          widthFactor: 1,
+          child: CarouselSlider(
+            carouselController: _buttonCarouselController,
+            options: CarouselOptions(
+              onPageChanged: (int index, CarouselPageChangedReason reason) {
+                _buttonCarouselController.jumpToPage(index);
+                setState(() {
+                  _currentBannerIndex = index;
+                });
+              },
+              initialPage: _currentBannerIndex,
+              // ⚠️ 设置为 false，避免缩放效果带来的边距
+              enlargeCenterPage: false,
+              // ✅ 关键设置：让每页占满屏幕宽度
+              viewportFraction: 1.0,
+              aspectRatio: 16 / 9,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 3),
+            ),
+            items: _getBannerImageList(),
           ),
-          items: _getBannerImageList(),
         ),
         Positioned(
           bottom: 10,
@@ -59,12 +62,9 @@ class _HomePageBannerState extends State<HomePageBanner> {
   //获取轮播图图片列表
   List<Widget> _getBannerImageList() {
     return widget.bannerList.map((imageUrl) {
-      return SizedBox(
-        height: 160,
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.fill,
-        ),
+      return Image.network(
+        imageUrl,
+        fit: BoxFit.fill,
       );
     }).toList();
   }
