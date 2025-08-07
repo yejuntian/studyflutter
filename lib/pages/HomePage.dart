@@ -8,7 +8,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
   final CarouselSliderController _buttonCarouselController =
       CarouselSliderController();
   final List<String> bannerList = [
@@ -21,6 +22,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // 保证 KeepAlive 生效
+    super.build(context);
     return Scaffold(
       //SafeArea 会根据设备的 状态栏、高度、底部手势区域 自动调整内边距,可以保证你的轮播图（或任何 widget）不会被系统 UI 遮挡
       body: SafeArea(
@@ -99,4 +102,7 @@ class _HomePageState extends State<HomePage> {
       );
     }).toList();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
