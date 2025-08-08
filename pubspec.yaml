@@ -43,6 +43,8 @@ dependencies:
   video_player: ^2.10.0
   #  首页轮播图组件
   carousel_slider: ^5.1.1
+  #http网络请求
+  http: ^1.5.0
 
 dev_dependencies:
   flutter_test:
