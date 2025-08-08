@@ -75,4 +75,10 @@ class _TabNavigatorState extends State<TabNavigator> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
 }
