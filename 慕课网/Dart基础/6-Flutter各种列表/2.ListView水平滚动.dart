@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const HorizontalListView());
+}
+
+class HorizontalListView extends StatefulWidget {
+  const HorizontalListView({super.key});
+
+  @override
+  State<HorizontalListView> createState() => _HorizontalListViewState();
+}
+
+class _HorizontalListViewState extends State<HorizontalListView> {
+  List<String> cities = [
+    "北京",
+    "上海",
+    "广州",
+    "深圳",
+    "杭州",
+    "成都",
+    "重庆",
+    "武汉",
+    "西安",
+    "南京",
+    "天津",
+    "苏州",
+    "青岛",
+    "长沙",
+    "郑州",
+    "宁波",
+    "厦门",
+    "福州",
+    "大连",
+    "济南",
+    "合肥",
+    "昆明",
+    "南昌",
+    "石家庄",
+    "太原",
+    "呼和浩特",
+    "兰州",
+    "贵阳",
+    "海口",
+    "乌鲁木齐",
+    "长春",
+    "哈尔滨",
+    "南宁",
+    "拉萨",
+    "银川",
+    "香港"
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "实现水平滚动List",
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("实现水平滚动List"),
+        ),
+        body: SizedBox(
+          //指定ListView父容器的高度，ListView的高度才会被约束。
+          height: 200,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: _buildListItem(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildListItem() {
+    return cities.map((city) => _buildItem(city)).toList();
+  }
+
+  Widget _buildItem(String city) {
+    return Container(
+      width: 160,
+      margin: const EdgeInsets.only(right: 5),
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(color: Colors.teal),
+      child: Text(
+        city,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+}
