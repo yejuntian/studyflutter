@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:studyflutter/model/common_model.dart';
 
 //首页轮播图
 class HomePageBanner extends StatefulWidget {
-  final List<String> bannerList;
+  final List<CommonModel> bannerList;
 
   const HomePageBanner({
     required this.bannerList,
@@ -61,9 +62,9 @@ class _HomePageBannerState extends State<HomePageBanner> {
 
   //获取轮播图图片列表
   List<Widget> _getBannerImageList() {
-    return widget.bannerList.map((imageUrl) {
+    return widget.bannerList.map((model) {
       return Image.network(
-        imageUrl,
+        model.icon ?? "",
         fit: BoxFit.fill,
       );
     }).toList();

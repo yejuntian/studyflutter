@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:studyflutter/dao/home_dao.dart';
 import 'package:studyflutter/model/home_model.dart';
 import 'package:studyflutter/widget/HomePageBanner.dart';
+import 'package:studyflutter/widget/local_nav.dart';
+
+import '../model/common_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,13 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
   double appBarAlpha = 0;
-  final List<String> bannerList = [
-    "https://www.devio.org/io/flutter_app/img/banner/100h10000000q7ght9352.jpg",
-    "https://dimg04.c-ctrip.com/images/300h0u000000j05rnD96B_C_500_280.jpg",
-    "http://pages.ctrip.com/hotel/201811/jdsc_640es_tab1.jpg",
-    "https://dimg03.c-ctrip.com/images/fd/tg/g1/M03/7E/19/CghzfVWw6OaACaJXABqNWv6ecpw824_C_500_280_Q90.jpg"
-  ];
-  String resultString = "";
+  List<CommonModel> bannerList = [];
+  List<CommonModel>? localNavList = [];
 
   @override
   void initState() {
@@ -63,10 +61,19 @@ class _HomePageState extends State<HomePage>
                     Column(
                       children: [
                         HomePageBanner(bannerList: bannerList),
-                        Container(
-                          color: Colors.red,
-                          height: 800,
-                          child: Text(resultString),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                          child: LocalNav(
+                            localNavList: localNavList,
+                          ),
+                        ),
+                        FractionallySizedBox(
+                          widthFactor: 1,
+                          child: Container(
+                            color: Colors.red,
+                            height: 800,
+                            child: const Text("下面内容"),
+                          ),
                         ),
                       ],
                     )
@@ -111,14 +118,13 @@ class _HomePageState extends State<HomePage>
 
   void loadData() async {
     try {
-    HomeModel homeModel = await HomeDao.fetch();
-    setState(() {
-      resultString = json.encode(homeModel.toJson());
-    });
-    } catch (e) {
+      HomeModel homeModel = await HomeDao.fetch();
       setState(() {
-        resultString = e.toString();
+        localNavList = homeModel.localNavList;
+        bannerList = homeModel.bannerList!;
       });
+    } catch (e) {
+      print(e);
     }
   }
 }
