@@ -5,6 +5,10 @@ class ConfigModel {
 
   ConfigModel.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
-    searchUrl = json[""] as String?;
+    searchUrl = json["searchUrl"] as String?;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {"searchUrl": searchUrl};
   }
 }

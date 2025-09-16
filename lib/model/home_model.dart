@@ -80,4 +80,21 @@ class HomeModel {
           : null,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "config": config?.toJson(),
+      "bannerList": bannerList?.map((obj) {
+        return obj.toJson();
+      }).toList(),
+      "localNavList": localNavList?.map((obj) {
+        return obj.toJson();
+      }).toList(),
+      "gridNav": gridNav?.toJson(),
+      "subNavList": subNavList?.map((obj) {
+        return obj.toJson();
+      }).toList(),
+      "salesBox": salesBox?.toJson(),
+    };
+  }
 }
