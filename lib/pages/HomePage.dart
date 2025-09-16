@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:studyflutter/dao/home_dao.dart';
+import 'package:studyflutter/model/home_model.dart';
 import 'package:studyflutter/widget/HomePageBanner.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +21,13 @@ class _HomePageState extends State<HomePage>
     "http://pages.ctrip.com/hotel/201811/jdsc_640es_tab1.jpg",
     "https://dimg03.c-ctrip.com/images/fd/tg/g1/M03/7E/19/CghzfVWw6OaACaJXABqNWv6ecpw824_C_500_280_Q90.jpg"
   ];
+  String resultString = "";
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +66,7 @@ class _HomePageState extends State<HomePage>
                         Container(
                           color: Colors.red,
                           height: 800,
-                          child: Text("哈哈"),
+                          child: Text(resultString),
                         ),
                       ],
                     )
@@ -96,5 +107,18 @@ class _HomePageState extends State<HomePage>
     setState(() {
       appBarAlpha = alpha;
     });
+  }
+
+  void loadData() async {
+    try {
+    HomeModel homeModel = await HomeDao.fetch();
+    setState(() {
+      resultString = json.encode(homeModel.toJson());
+    });
+    } catch (e) {
+      setState(() {
+        resultString = e.toString();
+      });
+    }
   }
 }
