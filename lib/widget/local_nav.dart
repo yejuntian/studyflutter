@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studyflutter/widget/webview.dart';
 import '../model/common_model.dart';
 
 class LocalNav extends StatelessWidget {
@@ -24,7 +25,17 @@ class LocalNav extends StatelessWidget {
     if (localNavList == null) return null;
     List<Widget> list = localNavList!.map((CommonModel commonModel) {
       return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (BuildContext context) {
+            return Webview(
+              url: commonModel.url,
+              statusBarColor: commonModel.statusBarColor,
+              title: commonModel.title,
+              hideAppBar: commonModel.hideAppBar,
+            );
+          }));
+        },
         child: Column(
           children: [
             Image.network(
