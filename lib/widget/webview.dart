@@ -3,6 +3,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
+//白名单网址
+const CATCH_URLS = ['m.ctrip.com/', 'm.ctrip.com/html5/', 'm.ctrip.com/html5'];
+
 class Webview extends StatefulWidget {
   String? url;
   String? statusBarColor;
@@ -16,7 +19,7 @@ class Webview extends StatefulWidget {
     this.statusBarColor,
     this.title,
     this.hideAppBar,
-    this.backForbid,
+    this.backForbid = false,
   });
 
   @override
@@ -25,6 +28,9 @@ class Webview extends StatefulWidget {
 
 class _WebviewState extends State<Webview> {
   late final WebViewController _controller;
+
+  //是否返回上一页
+  bool isBackPreviousPage = false;
 
   @override
   void initState() {
@@ -48,16 +54,26 @@ class _WebviewState extends State<Webview> {
           print('WebView is loading (progress : $progress%)');
         },
         onPageStarted: (String url) {
-          print("onPageStarted url is : $url");
+          print("WebView onPageStarted url is : $url");
+          if (_isToMain(url) && !isBackPreviousPage) {
+            if (widget.backForbid ?? false) {
+              // 重新加载指定url
+              controller.loadRequest(Uri.parse(widget.url ?? ""));
+            } else {
+              Navigator.pop(context);
+              isBackPreviousPage = true;
+            }
+          }
         },
         onPageFinished: (String url) {
-          print("onPageFinished url is : $url");
+          print("WebView onPageFinished url is : $url");
         },
         onHttpError: (HttpResponseError error) {
-          print('Error occurred on page: ${error.response?.statusCode}');
+          print(
+              'WebView Error occurred on page: ${error.response?.statusCode}');
         },
         onUrlChange: (UrlChange change) {
-          print('url change to ${change.url}');
+          print('WebView url change to ${change.url}');
         },
         onWebResourceError: (WebResourceError error) {},
         onNavigationRequest: (NavigationRequest request) {
@@ -148,5 +164,17 @@ class _WebviewState extends State<Webview> {
         ),
       );
     }
+  }
+
+  //判断是否要返回首页
+  bool _isToMain(String? netUrl) {
+    bool contains = false;
+    for (var url in CATCH_URLS) {
+      if (netUrl?.endsWith(url) ?? false) {
+        contains = true;
+        break;
+      }
+    }
+    return contains;
   }
 }
