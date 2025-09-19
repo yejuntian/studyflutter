@@ -3,7 +3,7 @@ import 'package:studyflutter/model/common_model.dart';
 import 'package:studyflutter/widget/webview.dart' show Webview;
 
 import '../model/grid_nav_model.dart';
-
+///网格卡片
 class GridNav extends StatelessWidget {
   GridNavModel? gridNavModel;
 

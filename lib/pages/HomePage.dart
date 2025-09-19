@@ -9,6 +9,7 @@ import 'package:studyflutter/widget/local_nav.dart';
 import '../model/common_model.dart';
 import '../model/grid_nav_model.dart';
 import '../widget/grid_nav.dart';
+import '../widget/sub_nav.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage>
   List<CommonModel> bannerList = [];
   List<CommonModel>? localNavList = [];
   GridNavModel? gridNav;
+  List<CommonModel>? subNavList = [];
 
   @override
   void initState() {
@@ -73,6 +75,10 @@ class _HomePageState extends State<HomePage>
                         Padding(
                           padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
                           child: GridNav(gridNavModel: gridNav),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                          child: SubNav(subNavList: subNavList),
                         ),
                         FractionallySizedBox(
                           widthFactor: 1,
@@ -130,6 +136,7 @@ class _HomePageState extends State<HomePage>
         localNavList = homeModel.localNavList;
         bannerList = homeModel.bannerList!;
         gridNav = homeModel.gridNav!;
+        subNavList = homeModel.subNavList;
       });
     } catch (e) {
       print(e);
