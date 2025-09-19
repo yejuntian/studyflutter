@@ -7,6 +7,8 @@ import 'package:studyflutter/widget/HomePageBanner.dart';
 import 'package:studyflutter/widget/local_nav.dart';
 
 import '../model/common_model.dart';
+import '../model/grid_nav_model.dart';
+import '../widget/grid_nav.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,6 +22,7 @@ class _HomePageState extends State<HomePage>
   double appBarAlpha = 0;
   List<CommonModel> bannerList = [];
   List<CommonModel>? localNavList = [];
+  GridNavModel? gridNav;
 
   @override
   void initState() {
@@ -66,6 +69,10 @@ class _HomePageState extends State<HomePage>
                           child: LocalNav(
                             localNavList: localNavList,
                           ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                          child: GridNav(gridNavModel: gridNav),
                         ),
                         FractionallySizedBox(
                           widthFactor: 1,
@@ -122,6 +129,7 @@ class _HomePageState extends State<HomePage>
       setState(() {
         localNavList = homeModel.localNavList;
         bannerList = homeModel.bannerList!;
+        gridNav = homeModel.gridNav!;
       });
     } catch (e) {
       print(e);
