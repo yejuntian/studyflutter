@@ -54,54 +54,49 @@ class _HomePageState extends State<HomePage>
                 //一定加上这个属性，否则不生效
                 removeTop: true,
                 //NotificationListener 监听所有列表组件的滚动
-                child: NotificationListener(
-                  onNotification: (scrollNotification) {
-                    //判断滚动位置发生了变化时触发且depth == 0（depth == 0含义限定只监听最外层的滚动）
-                    if (scrollNotification is ScrollUpdateNotification &&
-                        scrollNotification.depth == 0) {
-                      //滚动且是列表滚动的时候
-                      _onScroll(scrollNotification.metrics.pixels);
-                      //如果你希望“自己处理了”这个通知，就返回 true
-                      return true;
-                    } else {
-                      //如果你希望通知“继续上传”给其他父级监听者，返回 false
-                      return false;
-                    }
-                  },
-                  child: ListView(
-                    children: [
-                      Column(
-                        children: [
-                          HomePageBanner(bannerList: bannerList),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                            child: LocalNav(
-                              localNavList: localNavList,
+                child: RefreshIndicator(
+                  onRefresh: _handRefresh,
+                  child: NotificationListener(
+                    onNotification: (scrollNotification) {
+                      //判断滚动位置发生了变化时触发且depth == 0（depth == 0含义限定只监听最外层的滚动）
+                      if (scrollNotification is ScrollUpdateNotification &&
+                          scrollNotification.depth == 0) {
+                        //滚动且是列表滚动的时候
+                        _onScroll(scrollNotification.metrics.pixels);
+                        //如果你希望“自己处理了”这个通知，就返回 true
+                        return true;
+                      } else {
+                        //如果你希望通知“继续上传”给其他父级监听者，返回 false
+                        return false;
+                      }
+                    },
+                    child: ListView(
+                      children: [
+                        Column(
+                          children: [
+                            HomePageBanner(bannerList: bannerList),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                              child: LocalNav(
+                                localNavList: localNavList,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                            child: GridNav(gridNavModel: gridNav),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                            child: SubNav(subNavList: subNavList),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                            child: SalesBox(salesBox: salesBox),
-                          ),
-                          FractionallySizedBox(
-                            widthFactor: 1,
-                            child: Container(
-                              color: Colors.red,
-                              height: 800,
-                              child: const Text("下面内容"),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                              child: GridNav(gridNavModel: gridNav),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                              child: SubNav(subNavList: subNavList),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                              child: SalesBox(salesBox: salesBox),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -141,7 +136,7 @@ class _HomePageState extends State<HomePage>
     });
   }
 
-  void loadData() async {
+  Future<Null> loadData() async {
     try {
       HomeModel homeModel = await HomeDao.fetch();
       setState(() {
@@ -158,5 +153,10 @@ class _HomePageState extends State<HomePage>
         isLoading = false;
       });
     }
+  }
+
+  Future<void> _handRefresh() async {
+    loadData();
+    return;
   }
 }
