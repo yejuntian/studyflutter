@@ -24,8 +24,8 @@ class SalesBoxModel {
 
   SalesBoxModel.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
-    icon == json["icon"] as String?;
-    moreUrl == json["moreUrl"] as String?;
+    icon = json["icon"] as String?;
+    moreUrl = json["moreUrl"] as String?;
     bigCard1 = json["bigCard1"] != null
         ? CommonModel.fromJson(json["bigCard1"])
         : null;

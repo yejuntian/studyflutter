@@ -5,9 +5,11 @@ import 'package:studyflutter/dao/home_dao.dart';
 import 'package:studyflutter/model/home_model.dart';
 import 'package:studyflutter/widget/HomePageBanner.dart';
 import 'package:studyflutter/widget/local_nav.dart';
+import 'package:studyflutter/widget/sales_box.dart';
 
 import '../model/common_model.dart';
 import '../model/grid_nav_model.dart';
+import '../model/sales_box_model.dart';
 import '../widget/grid_nav.dart';
 import '../widget/sub_nav.dart';
 
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage>
   List<CommonModel>? localNavList = [];
   GridNavModel? gridNav;
   List<CommonModel>? subNavList = [];
+  SalesBoxModel? salesBox;
 
   @override
   void initState() {
@@ -79,6 +82,9 @@ class _HomePageState extends State<HomePage>
                         Padding(
                           padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
                           child: SubNav(subNavList: subNavList),
+                        ), Padding(
+                          padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                          child: SalesBox(salesBox: salesBox),
                         ),
                         FractionallySizedBox(
                           widthFactor: 1,
@@ -137,6 +143,7 @@ class _HomePageState extends State<HomePage>
         bannerList = homeModel.bannerList!;
         gridNav = homeModel.gridNav!;
         subNavList = homeModel.subNavList;
+        salesBox = homeModel.salesBox;
       });
     } catch (e) {
       print(e);
