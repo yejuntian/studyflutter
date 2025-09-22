@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:studyflutter/model/common_model.dart';
+import 'package:studyflutter/util/navigator_util.dart';
+import 'package:studyflutter/widget/webview.dart';
 
 //首页轮播图
 class HomePageBanner extends StatefulWidget {
@@ -63,9 +65,21 @@ class _HomePageBannerState extends State<HomePageBanner> {
   //获取轮播图图片列表
   List<Widget> _getBannerImageList() {
     return widget.bannerList.map((model) {
-      return Image.network(
-        model.icon ?? "",
-        fit: BoxFit.fill,
+      return GestureDetector(
+        onTap: () {
+          NavigatorUtil.push(
+            context,
+            Webview(
+              url: model.url ?? "",
+              statusBarColor: model.statusBarColor,
+              hideAppBar: true,
+            ),
+          );
+        },
+        child: Image.network(
+          model.icon ?? "",
+          fit: BoxFit.fill,
+        ),
       );
     }).toList();
   }
