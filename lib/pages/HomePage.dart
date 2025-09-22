@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:studyflutter/dao/home_dao.dart';
 import 'package:studyflutter/model/home_model.dart';
 import 'package:studyflutter/widget/HomePageBanner.dart';
+import 'package:studyflutter/widget/loading_container.dart';
 import 'package:studyflutter/widget/local_nav.dart';
 import 'package:studyflutter/widget/sales_box.dart';
 
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage>
   GridNavModel? gridNav;
   List<CommonModel>? subNavList = [];
   SalesBoxModel? salesBox;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -41,79 +43,83 @@ class _HomePageState extends State<HomePage>
     super.build(context);
     return Scaffold(
       //SafeArea 会根据设备的 状态栏、高度、底部手势区域 自动调整内边距,可以保证你的轮播图（或任何 widget）不会被系统 UI 遮挡
-      body: SafeArea(
-        //MediaQuery用来移除ListView默认自带的top padding
-        child: Stack(
-          children: [
-            MediaQuery.removePadding(
-              context: context,
-              //一定加上这个属性，否则不生效
-              removeTop: true,
-              //NotificationListener 监听所有列表组件的滚动
-              child: NotificationListener(
-                onNotification: (scrollNotification) {
-                  //判断滚动位置发生了变化时触发且depth == 0（depth == 0含义限定只监听最外层的滚动）
-                  if (scrollNotification is ScrollUpdateNotification &&
-                      scrollNotification.depth == 0) {
-                    //滚动且是列表滚动的时候
-                    _onScroll(scrollNotification.metrics.pixels);
-                    //如果你希望“自己处理了”这个通知，就返回 true
-                    return true;
-                  } else {
-                    //如果你希望通知“继续上传”给其他父级监听者，返回 false
-                    return false;
-                  }
-                },
-                child: ListView(
-                  children: [
-                    Column(
-                      children: [
-                        HomePageBanner(bannerList: bannerList),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                          child: LocalNav(
-                            localNavList: localNavList,
+      body: LoadingContainer(
+        isLoading: isLoading,
+        child: SafeArea(
+          //MediaQuery用来移除ListView默认自带的top padding
+          child: Stack(
+            children: [
+              MediaQuery.removePadding(
+                context: context,
+                //一定加上这个属性，否则不生效
+                removeTop: true,
+                //NotificationListener 监听所有列表组件的滚动
+                child: NotificationListener(
+                  onNotification: (scrollNotification) {
+                    //判断滚动位置发生了变化时触发且depth == 0（depth == 0含义限定只监听最外层的滚动）
+                    if (scrollNotification is ScrollUpdateNotification &&
+                        scrollNotification.depth == 0) {
+                      //滚动且是列表滚动的时候
+                      _onScroll(scrollNotification.metrics.pixels);
+                      //如果你希望“自己处理了”这个通知，就返回 true
+                      return true;
+                    } else {
+                      //如果你希望通知“继续上传”给其他父级监听者，返回 false
+                      return false;
+                    }
+                  },
+                  child: ListView(
+                    children: [
+                      Column(
+                        children: [
+                          HomePageBanner(bannerList: bannerList),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                            child: LocalNav(
+                              localNavList: localNavList,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                          child: GridNav(gridNavModel: gridNav),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                          child: SubNav(subNavList: subNavList),
-                        ), Padding(
-                          padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                          child: SalesBox(salesBox: salesBox),
-                        ),
-                        FractionallySizedBox(
-                          widthFactor: 1,
-                          child: Container(
-                            color: Colors.red,
-                            height: 800,
-                            child: const Text("下面内容"),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                            child: GridNav(gridNavModel: gridNav),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Opacity(
-              opacity: appBarAlpha,
-              child: Container(
-                height: 80,
-                decoration: const BoxDecoration(color: Colors.white),
-                child: const Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 0),
-                    child: Text("首页"),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                            child: SubNav(subNavList: subNavList),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+                            child: SalesBox(salesBox: salesBox),
+                          ),
+                          FractionallySizedBox(
+                            widthFactor: 1,
+                            child: Container(
+                              color: Colors.red,
+                              height: 800,
+                              child: const Text("下面内容"),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+              Opacity(
+                opacity: appBarAlpha,
+                child: Container(
+                  height: 80,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 0),
+                      child: Text("首页"),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -144,9 +150,13 @@ class _HomePageState extends State<HomePage>
         gridNav = homeModel.gridNav!;
         subNavList = homeModel.subNavList;
         salesBox = homeModel.salesBox;
+        isLoading = false;
       });
     } catch (e) {
       print(e);
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 }
