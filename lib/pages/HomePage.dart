@@ -70,49 +70,11 @@ class _HomePageState extends State<HomePage>
                         return false;
                       }
                     },
-                    child: ListView(
-                      children: [
-                        Column(
-                          children: [
-                            HomePageBanner(bannerList: bannerList),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                              child: LocalNav(
-                                localNavList: localNavList,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                              child: GridNav(gridNavModel: gridNav),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                              child: SubNav(subNavList: subNavList),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
-                              child: SalesBox(salesBox: salesBox),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                    child: _listView,
                   ),
                 ),
               ),
-              Opacity(
-                opacity: appBarAlpha,
-                child: Container(
-                  height: 80,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 0),
-                      child: Text("首页"),
-                    ),
-                  ),
-                ),
-              ),
+              _appBar,
             ],
           ),
         ),
@@ -158,5 +120,51 @@ class _HomePageState extends State<HomePage>
   Future<void> _handRefresh() async {
     loadData();
     return;
+  }
+
+  Widget get _listView {
+    return ListView(
+      children: [
+        Column(
+          children: [
+            HomePageBanner(bannerList: bannerList),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+              child: LocalNav(
+                localNavList: localNavList,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+              child: GridNav(gridNavModel: gridNav),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+              child: SubNav(subNavList: subNavList),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(7, 0, 7, 4),
+              child: SalesBox(salesBox: salesBox),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget get _appBar {
+    return Opacity(
+      opacity: appBarAlpha,
+      child: Container(
+        height: 80,
+        decoration: const BoxDecoration(color: Colors.white),
+        child: const Center(
+          child: Padding(
+            padding: EdgeInsets.only(top: 0),
+            child: Text("首页"),
+          ),
+        ),
+      ),
+    );
   }
 }
