@@ -101,7 +101,50 @@ class _SearchBarState extends State<SearchBar> {
   }
 
   Widget _genHomeSearch() {
-    return Container();
+    return Container(
+      child: Row(
+        children: [
+          Row(
+            children: [
+              _wrapGestureTap(
+                //左侧按钮
+                widget.leftButtonClick,
+                Container(
+                  //设置返回按钮边距
+                  padding: const EdgeInsets.fromLTRB(6, 5, 10, 5),
+                  child: Row(
+                    children: [
+                      Text(
+                        "上海",
+                        style: TextStyle(color: _homeFontColor(), fontSize: 14),
+                      ),
+                      Icon(
+                        Icons.expand_more,
+                        color: _homeFontColor(),
+                        size: 22,
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+          Expanded(flex: 1, child: _inputBox()), //中间搜索框
+          _wrapGestureTap(
+            //右侧搜索按钮
+            widget.rightButtonClick,
+            Container(
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+              child: Icon(
+                Icons.comment,
+                color: _homeFontColor(),
+                size: 26,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   //中间输入框
@@ -206,5 +249,12 @@ class _SearchBarState extends State<SearchBar> {
     if (widget.onChanged != null) {
       widget.onChanged!(text);
     }
+  }
+
+  //获取首页前景色
+  Color _homeFontColor() {
+    return widget.searchBarType == SearchBarType.homeLight
+        ? Colors.black54
+        : Colors.white;
   }
 }
