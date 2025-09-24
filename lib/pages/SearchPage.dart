@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide SearchBar;
 import 'package:studyflutter/dao/search_dao.dart';
 import 'package:studyflutter/model/search_model.dart';
 import 'package:studyflutter/widget/search_bar.dart';
+import 'package:studyflutter/widget/webview.dart';
 
 const URL =
     'https://m.ctrip.com/restapi/h5api/globalsearch/search?source=mobileweb&action=mobileweb&keyword=';
@@ -114,6 +115,41 @@ class _SearchPageState extends State<SearchPage>
   _listViewItem(int pos) {
     if (searchModel == null || searchModel?.data == null) return null;
     SearchItem searchItem = searchModel!.data![pos];
-    return Text(searchItem.word ?? "");
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Webview(
+              url: searchItem.url,
+              title: "详情",
+            ),
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(width: 0.3, color: Colors.grey),
+          ),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                      "${searchItem.word ?? ""}${searchItem.districtname ?? ""}${searchItem.zonename ?? ""}"),
+                  Text("${searchItem.price ?? ""}${searchItem.type ?? ""}"),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
