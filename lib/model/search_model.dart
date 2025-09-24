@@ -1,7 +1,8 @@
 class SearchModel {
   List<SearchItem>? data;
+  String? keyWord;
 
-  SearchModel({this.data});
+  SearchModel({this.data, this.keyWord});
 
   SearchModel.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;

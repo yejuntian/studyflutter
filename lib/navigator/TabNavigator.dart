@@ -30,11 +30,11 @@ class _TabNavigatorState extends State<TabNavigator> {
           });
         },
         controller: _controller,
-        children: const [
-          HomePage(),
+        children: [
+          const HomePage(),
           SearchPage(),
-          TravelPage(),
-          MyPage(),
+          const TravelPage(),
+          const MyPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
