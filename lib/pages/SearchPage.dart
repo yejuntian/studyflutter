@@ -6,6 +6,21 @@ import 'package:studyflutter/widget/webview.dart';
 
 const URL =
     'https://m.ctrip.com/restapi/h5api/globalsearch/search?source=mobileweb&action=mobileweb&keyword=';
+const IMAGE_TYPES = [
+  'channelgroup',
+  'gs',
+  'plane',
+  'train',
+  'cruise',
+  'district',
+  'food',
+  'hotel',
+  'huodong',
+  'shop',
+  'sight',
+  'ticket',
+  'travelgroup'
+];
 
 class SearchPage extends StatefulWidget {
   bool? hideLeftButton;
@@ -136,6 +151,16 @@ class _SearchPageState extends State<SearchPage>
         ),
         child: Row(
           children: [
+            Center(
+              child: Container(
+                margin: const EdgeInsets.all(1),
+                child: Image(
+                  width: 26,
+                  height: 26,
+                  image: AssetImage(_typeImage(searchItem)),
+                ),
+              ),
+            ),
             Expanded(
               flex: 1,
               child: Column(
@@ -151,5 +176,20 @@ class _SearchPageState extends State<SearchPage>
         ),
       ),
     );
+  }
+
+  String _typeImage(SearchItem searchItem) {
+    String type = searchItem.type ?? "";
+    if (type.isEmpty) {
+      return "images/type_travelgroup.png";
+    }
+    String path = "travelgroup";
+    for (var val in IMAGE_TYPES) {
+      if (type.contains(val)) {
+        path = val;
+        break;
+      }
+    }
+    return "images/type_$path.png";
   }
 }
