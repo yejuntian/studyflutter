@@ -166,9 +166,8 @@ class _SearchPageState extends State<SearchPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                      "${searchItem.word ?? ""}${searchItem.districtname ?? ""}${searchItem.zonename ?? ""}"),
-                  Text("${searchItem.price ?? ""}${searchItem.type ?? ""}"),
+                  _title(searchItem),
+                  _subTitle(searchItem),
                 ],
               ),
             ),
@@ -191,5 +190,57 @@ class _SearchPageState extends State<SearchPage>
       }
     }
     return "images/type_$path.png";
+  }
+
+  //itemView标题
+  _title(SearchItem searchItem) {
+    List<TextSpan> spans = [];
+    spans.addAll(_keyWordTextSpans(searchItem.word, searchModel?.keyWord));
+    spans.add(TextSpan(
+        text: " ${searchItem.districtname ?? ""} ${searchItem.zonename ?? ""}",
+        style: const TextStyle(fontSize: 16, color: Colors.grey)));
+    return RichText(text: TextSpan(children: spans));
+  }
+
+  //itemView子标题
+  _subTitle(SearchItem searchItem) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: searchItem.price ?? "",
+            style: const TextStyle(fontSize: 16, color: Colors.orange),
+          ),
+          TextSpan(
+            text: " ${searchItem.star ?? ""}",
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Iterable<TextSpan> _keyWordTextSpans(String? word, String? keyWord) {
+    List<TextSpan> spans = [];
+    if (word == null || word.isEmpty || keyWord == null || keyWord.isEmpty) {
+      return spans;
+    }
+    List<String> arr = word.split(keyWord);
+    TextStyle normalStyle =
+        const TextStyle(fontSize: 16, color: Colors.black87);
+    TextStyle keyWordStyle =
+        const TextStyle(fontSize: 16, color: Colors.orange);
+    //'wordwoc'.split('w') -> [, ord, oc] @https://www.tutorialspoint.com/tpcg.php?p=wcpcUA
+    for (var i = 0; i < arr.length; i++) {
+      String value = arr[i];
+      if (value.isNotEmpty) {
+        spans.add(TextSpan(text: value, style: normalStyle));
+      }
+      if (i < arr.length - 1) {
+        // 保证不是最后一个才加关键字
+        spans.add(TextSpan(text: keyWord, style: keyWordStyle));
+      }
+    }
+    return spans;
   }
 }

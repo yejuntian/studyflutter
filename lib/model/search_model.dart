@@ -31,6 +31,7 @@ class SearchItem {
   String? zonename;
   bool? isBigIcon;
   String? price;
+  String? star;
 
   SearchItem({
     this.code,
@@ -41,6 +42,7 @@ class SearchItem {
     this.url,
     this.isBigIcon,
     this.price,
+    this.star,
   });
 
   SearchItem.fromJson(Map<String, dynamic>? json) {
@@ -52,6 +54,7 @@ class SearchItem {
     zonename = json?["zonename"] as String?;
     isBigIcon = json?["isBigIcon"] as bool?;
     price = json?["price"] as String?;
+    star = json?["star"] as String?;
   }
 
   Map<String, dynamic> toJson() {
@@ -62,6 +65,7 @@ class SearchItem {
       "districtname": districtname,
       "zonename": zonename,
       "price": price,
+      "star": star,
       "url": url,
       "isBigIcon": isBigIcon
     };
