@@ -1,9 +1,18 @@
-import org.gradle.internal.impldep.bsh.commands.dir
+import java.util.Properties
 
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
 }
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.reader(Charsets.UTF_8).use { localProperties.load(it) }
+}
+//获取FlutterSdk的路径
+val flutterSdkPath = localProperties.getProperty("flutter.sdk")
+    ?: throw GradleException("Flutter SDK not found. Please define 'flutter.sdk' in local.properties")
 
 android {
     namespace = "org.devio.flutter.plugin.asr"
@@ -42,4 +51,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
+
+    // Flutter SDK jar（Library Module 必须手动 implementation(files(...flutter.jar)) 才能访问 Flutter API）
+    implementation(files("$flutterSdkPath/bin/cache/artifacts/engine/android-arm64-release/flutter.jar"))
 }

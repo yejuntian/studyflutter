@@ -5,15 +5,16 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-import io.flutter.plugin.common.PluginRegistry;
 
 public class AsrPlugin implements MethodChannel.MethodCallHandler {
     private final static String TAG = "AsrPlugin";
@@ -21,14 +22,14 @@ public class AsrPlugin implements MethodChannel.MethodCallHandler {
     private ResultStateful resultStateful;
     private AsrManager asrManager;
 
-    public static void registerWith(PluginRegistry.Registrar registrar) {
-        MethodChannel channel = new MethodChannel(registrar.messenger(), "asr_plugin");
-        AsrPlugin instance = new AsrPlugin(registrar);
+    public static void registerWith(Activity activity, FlutterEngine flutterEngine) {
+        MethodChannel channel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "asr_plugin");
+        AsrPlugin instance = new AsrPlugin(activity);
         channel.setMethodCallHandler(instance);
     }
 
-    public AsrPlugin(PluginRegistry.Registrar registrar) {
-        this.activity = registrar.activity();
+    public AsrPlugin(Activity activity) {
+        this.activity = activity;
     }
 
     @Override
