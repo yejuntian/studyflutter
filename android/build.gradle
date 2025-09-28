@@ -1,3 +1,11 @@
+buildscript {
+    dependencies {
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0'
+    }
+}
+plugins {
+    id 'com.android.library' apply false
+}
 allprojects {
     repositories {
         google()
