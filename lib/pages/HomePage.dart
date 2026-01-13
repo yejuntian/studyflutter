@@ -4,6 +4,7 @@ import 'package:flutter/material.dart' hide SearchBar;
 import 'package:studyflutter/dao/home_dao.dart';
 import 'package:studyflutter/model/home_model.dart';
 import 'package:studyflutter/pages/SearchPage.dart';
+import 'package:studyflutter/pages/SpeakPage.dart';
 import 'package:studyflutter/widget/HomePageBanner.dart';
 import 'package:studyflutter/widget/loading_container.dart';
 import 'package:studyflutter/widget/local_nav.dart';
@@ -226,5 +227,9 @@ class _HomePageState extends State<HomePage>
   }
 
 //跳转到语音页面
-  void _jumpToSpeak() {}
+  void _jumpToSpeak() {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return SpeakPage();
+    }));
+  }
 }

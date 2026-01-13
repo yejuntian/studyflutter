@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide SearchBar;
 import 'package:studyflutter/dao/search_dao.dart';
 import 'package:studyflutter/model/search_model.dart';
+import 'package:studyflutter/pages/SpeakPage.dart';
 import 'package:studyflutter/widget/search_bar.dart';
 import 'package:studyflutter/widget/webview.dart';
 
@@ -118,6 +119,14 @@ class _SearchPageState extends State<SearchPage>
                 hitText: widget.hintText,
                 leftButtonClick: () {
                   Navigator.pop(context);
+                },
+                speakClick: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SpeakPage(),
+                    ),
+                  );
                 },
                 onChanged: _onTextChange,
                 searchBarType: SearchBarType.normal),
