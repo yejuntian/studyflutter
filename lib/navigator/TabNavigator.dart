@@ -30,6 +30,8 @@ class _TabNavigatorState extends State<TabNavigator> {
           });
         },
         controller: _controller,
+        //禁止滑动
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           const HomePage(),
           SearchPage(),
