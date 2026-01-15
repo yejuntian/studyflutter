@@ -3,6 +3,7 @@ import 'package:studyflutter/dao/travel_tab_dao.dart';
 import 'package:studyflutter/model/travel_tab_model.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
+import 'package:studyflutter/pages/travel_tab_page.dart';
 
 class TravelPage extends StatefulWidget {
   const TravelPage({super.key});
@@ -61,15 +62,19 @@ class _TravelPageState extends State<TravelPage>
                         color: Colors.red, fontWeight: FontWeight.bold), // 选中红色
                   ),
                 ),
-                Expanded(
+                //Flexible:在可用空间内“尽量占”，但可以被压缩（只在 Row / Column / Flex 中生效）
+                // FlexFit.loose（默认，Flexible）
+                // 最多占，不强制填满
+                // 内容可以决定大小
+                // 🔹 FlexFit.tight（等同 Expanded）
+                Flexible(
+                  fit: FlexFit.tight,
                   child: TabBarView(
                     controller: _tabController,
                     children: tabs.map((TravelTab tab) {
-                      return Center(
-                        child: Text(
-                          tab.labelName ?? '',
-                          style: TextStyle(fontSize: 16),
-                        ),
+                      return TravelTabPage(
+                        travelTabModel?.url ?? '',
+                        tab.groupChannelCode ?? '',
                       );
                     }).toList(),
                   ),
