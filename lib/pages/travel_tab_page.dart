@@ -123,6 +123,10 @@ class _TravelItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           color: Colors.transparent,
           child: Column(
+            // 主轴方向（垂直方向）从顶部开始对齐子组件
+            mainAxisAlignment: MainAxisAlignment.start,
+            // 交叉轴方向（水平方向）拉伸子组件以填满整个宽度
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _itemImage(context),
               Container(
