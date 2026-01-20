@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:studyflutter/widget/webview.dart';
 
 import '../dao/travel_dao.dart';
 import '../model/travel_model.dart';
@@ -38,15 +39,15 @@ class _TravelTabPageState extends State<TravelTabPage> {
         gridDelegate: SliverWovenGridDelegate.count(
           // 设置交错网格委托，创建不规则但有序的网格布局
           crossAxisCount: 2, // 主轴方向（水平）显示2列
-          // mainAxisSpacing: 2, // 主轴方向（垂直）间距为2像素
-          // crossAxisSpacing: 2, // 交叉轴方向（水平）间距为2像素
+          mainAxisSpacing: 4, // 主轴方向（垂直）间距为4像素，增加间距让布局更美观
+          crossAxisSpacing: 4, // 交叉轴方向（水平）间距为4像素，增加间距让布局更美观
           pattern: [
             // 定义网格图案模式，交替使用不同的网格单元格大小
             const WovenGridTile(1), // 第一种模式：占1个标准单元格大小
             const WovenGridTile(
-              5 / 7, // 第二种模式：高度与宽度比例为5:7的矩形
-              crossAxisRatio: 0.9, // 交叉轴（宽度）比例为0.9
-              alignment: AlignmentDirectional.centerEnd, // 内容对齐方式为结束位置居中
+              1,
+              crossAxisRatio: 0.9, // 交叉轴（宽度）比例为0.9,
+              alignment: AlignmentDirectional.center,
             ),
           ],
         ),
@@ -106,16 +107,92 @@ class _TravelItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        travelItem?.article?.articleTitle ?? '',
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
+    return GestureDetector(
+      onTap: () {
+        if (travelItem?.article != null &&
+            travelItem!.article!.urls != null &&
+            travelItem!.article!.urls!.isNotEmpty) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Webview(
+                title: "详情",
+                url: travelItem!.article!.urls![0].h5Url,
+              ),
+            ),
+          );
+        }
+      },
+      child: Card(
+        child: PhysicalModel(
+          clipBehavior: Clip.antiAlias,
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.transparent,
+          child: Column(
+            children: [
+              _itemImage(context),
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  _itemImage(BuildContext context) {
+    return Stack(children: [
+      Image.network(
+        travelItem?.article?.images?[0].dynamicUrl ?? "",
+        width: MediaQuery.of(context).size.width,
+        height: 200,
+        fit: BoxFit.cover,
+      ),
+      Positioned(
+        left: 8,
+        bottom: 8,
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(5, 1, 5, 1),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white54, width: 1),
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.black54,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(right: 5),
+                child: Icon(
+                  Icons.location_on,
+                  color: Colors.white,
+                  size: 12,
+                ),
+              ),
+              LimitedBox(
+                maxWidth: 130,
+                child: Text(
+                  _getLocation(travelItem),
+                  maxLines: 1, //最多显示一行
+                  // 超出显示省略号
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
+    ]);
+  }
+
+  //获取位置信息
+  String _getLocation(TravelItem? travelItem) {
+    if (travelItem?.article?.pois == null ||
+        travelItem!.article!.pois!.isEmpty) {
+      return "未知";
+    }
+    return travelItem.article?.pois?[0].poiName ?? "未知";
   }
 }
