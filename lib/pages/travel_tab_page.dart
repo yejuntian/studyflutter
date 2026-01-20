@@ -22,7 +22,9 @@ class TravelTabPage extends StatefulWidget {
   State<TravelTabPage> createState() => _TravelTabPageState();
 }
 
-class _TravelTabPageState extends State<TravelTabPage> {
+//实现AutomaticKeepAliveClientMixin自动保持页面状态
+class _TravelTabPageState extends State<TravelTabPage>
+    with AutomaticKeepAliveClientMixin {
   List<TravelItem> travelItems = [];
 
   @override
@@ -86,6 +88,10 @@ class _TravelTabPageState extends State<TravelTabPage> {
     });
     return filterItems;
   }
+
+  @override
+  // 防止页面被回收（防止页面重新绘制）
+  bool get wantKeepAlive => true;
 }
 
 //itemView子组件
