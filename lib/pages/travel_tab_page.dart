@@ -131,6 +131,19 @@ class _TravelItem extends StatelessWidget {
           child: Column(
             children: [
               _itemImage(context),
+              Container(
+                padding: const EdgeInsets.all(4),
+                child: Text(
+                  travelItem?.article?.articleTitle ?? "",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              _infoText(),
             ],
           ),
         ),
@@ -194,5 +207,66 @@ class _TravelItem extends StatelessWidget {
       return "未知";
     }
     return travelItem.article?.pois?[0].poiName ?? "未知";
+  }
+
+//显示底部左右布局的text文本
+  _infoText() {
+    return Container(
+      padding: const EdgeInsets.only(left: 6, top: 0, right: 6, bottom: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // 左边的作者头像和昵称 作者信息
+          Row(
+            children: [
+              PhysicalModel(
+                color: Colors.transparent,
+                clipBehavior: Clip.antiAlias,
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  travelItem?.article?.author?.coverImage?.dynamicUrl ?? "",
+                  width: 24,
+                  height: 24,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(5),
+                width: 90,
+                child: Text(
+                  travelItem?.article?.author?.nickName ?? "",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+              )
+            ],
+          ),
+          // 右边的点赞数和评论数
+          Row(
+            children: [
+              // 点赞数
+              const Icon(
+                Icons.thumb_up,
+                size: 14,
+                color: Colors.grey,
+              ),
+              // 评论数
+              Padding(
+                padding: const EdgeInsets.only(left: 3),
+                child: Text(
+                  (travelItem?.article?.likeCount ?? 0).toString(),
+                  style: const TextStyle(
+                    fontSize: 10,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
