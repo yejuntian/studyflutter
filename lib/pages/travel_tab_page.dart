@@ -34,31 +34,25 @@ class _TravelTabPageState extends State<TravelTabPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.custom(
-        // 使用自定义网格视图，允许更灵活的布局控制
-        gridDelegate: SliverWovenGridDelegate.count(
-          // 设置交错网格委托，创建不规则但有序的网格布局
-          crossAxisCount: 2, // 主轴方向（水平）显示2列
-          mainAxisSpacing: 4, // 主轴方向（垂直）间距为4像素，增加间距让布局更美观
-          crossAxisSpacing: 4, // 交叉轴方向（水平）间距为4像素，增加间距让布局更美观
-          pattern: [
-            // 定义网格图案模式，交替使用不同的网格单元格大小
-            const WovenGridTile(1), // 第一种模式：占1个标准单元格大小
-            const WovenGridTile(
-              1,
-              crossAxisRatio: 0.9, // 交叉轴（宽度）比例为0.9,
-              alignment: AlignmentDirectional.center,
-            ),
-          ],
-        ),
-        childrenDelegate: SliverChildBuilderDelegate(
-          // 创建子组件
-          (context, index) => _TravelItem(
+      //MasonryGridView.count:容器高度根据组件大小而定（自适应高度瀑布流（不会裁）
+      //SliverWovenGridDelegate.count:固定高度网格（会裁内容）
+      body: MasonryGridView.count(
+        // 使用瀑布流网格视图展示旅拍项目
+        crossAxisCount: 2,
+        // 每行显示2列
+        mainAxisSpacing: 6,
+        // 主轴方向间距为6
+        crossAxisSpacing: 6,
+        // 交叉轴方向间距为6
+        itemCount: travelItems.length,
+        // 项目总数
+        itemBuilder: (context, index) {
+          // 构建每个网格项
+          return _TravelItem(
             index: index,
             travelItem: travelItems[index],
-          ),
-          childCount: travelItems.length,
-        ),
+          );
+        },
       ),
     );
   }
