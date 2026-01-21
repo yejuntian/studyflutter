@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:studyflutter/widget/loading_container.dart';
 import 'package:studyflutter/widget/webview.dart';
 
 import '../dao/travel_dao.dart';
@@ -26,6 +27,7 @@ class TravelTabPage extends StatefulWidget {
 class _TravelTabPageState extends State<TravelTabPage>
     with AutomaticKeepAliveClientMixin {
   List<TravelItem> travelItems = [];
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -36,25 +38,32 @@ class _TravelTabPageState extends State<TravelTabPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //MasonryGridView.count:容器高度根据组件大小而定（自适应高度瀑布流（不会裁）
-      //SliverWovenGridDelegate.count:固定高度网格（会裁内容）
-      body: MasonryGridView.count(
-        // 使用瀑布流网格视图展示旅拍项目
-        crossAxisCount: 2,
-        // 每行显示2列
-        mainAxisSpacing: 6,
-        // 主轴方向间距为6
-        crossAxisSpacing: 6,
-        // 交叉轴方向间距为6
-        itemCount: travelItems.length,
-        // 项目总数
-        itemBuilder: (context, index) {
-          // 构建每个网格项
-          return _TravelItem(
-            index: index,
-            travelItem: travelItems[index],
-          );
-        },
+      body: LoadingContainer(
+        isLoading: isLoading,
+        child: MediaQuery.removePadding(
+          removeTop: true,
+          context: context,
+          //MasonryGridView.count:容器高度根据组件大小而定（自适应高度瀑布流（不会裁）
+          //SliverWovenGridDelegate.count:固定高度网格（会裁内容）
+          child: MasonryGridView.count(
+            // 使用瀑布流网格视图展示旅拍项目
+            crossAxisCount: 2,
+            // 每行显示2列
+            mainAxisSpacing: 6,
+            // 主轴方向间距为6
+            crossAxisSpacing: 6,
+            // 交叉轴方向间距为6
+            itemCount: travelItems.length,
+            // 项目总数
+            itemBuilder: (context, index) {
+              // 构建每个网格项
+              return _TravelItem(
+                index: index,
+                travelItem: travelItems[index],
+              );
+            },
+          ),
+        ),
       ),
     );
   }
@@ -67,10 +76,12 @@ class _TravelTabPageState extends State<TravelTabPage>
         List<TravelItem> items = _filterItems(travelItemModel.resultList);
         if (items.isNotEmpty) {
           travelItems.addAll(items);
+          isLoading = false;
           print("travelItems count = ${travelItems.length}");
         }
       });
     }).catchError((e) {
+      isLoading = false;
       print(e);
     });
   }
