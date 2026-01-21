@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:studyflutter/widget/webview.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -12,9 +13,13 @@ class _MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     // 保证 KeepAlive 生效
     super.build(context);
-    return Center(
-      child: Text("我的"),
-    );
+    return Scaffold(
+        body: Webview(
+      url: "https://m.ctrip.com/webapp/myctrip/",
+      hideAppBar: true,
+      backForbid: true,
+      statusBarColor: '4c5bca',
+    ));
   }
 
   @override
