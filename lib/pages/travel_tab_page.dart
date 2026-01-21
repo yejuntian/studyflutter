@@ -28,11 +28,20 @@ class _TravelTabPageState extends State<TravelTabPage>
     with AutomaticKeepAliveClientMixin {
   List<TravelItem> travelItems = [];
   bool isLoading = true;
+  final ScrollController _controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _loadData();
+    // 监听滚动事件，当滚动到页面底部时加载更多数据
+    _controller.addListener(() {
+      if (_controller.position.pixels >= _controller.position.maxScrollExtent) {
+        setState(() {
+          _loadData();
+        });
+      }
+    });
   }
 
   @override
@@ -48,6 +57,8 @@ class _TravelTabPageState extends State<TravelTabPage>
               //MasonryGridView.count:容器高度根据组件大小而定（自适应高度瀑布流（不会裁）
               //SliverWovenGridDelegate.count:固定高度网格（会裁内容）
               child: MasonryGridView.count(
+                // 使用ScrollController控制滚动
+                controller: _controller,
                 // 使用瀑布流网格视图展示旅拍项目
                 crossAxisCount: 2,
                 // 每行显示2列
@@ -70,7 +81,13 @@ class _TravelTabPageState extends State<TravelTabPage>
     );
   }
 
-  void _loadData() async {
+  void _loadData({loadMore = false}) async {
+    // 如果是加载更多，则页码加1，否则页码重置为1
+    if (loadMore) {
+      pageIndex++;
+    } else {
+      pageIndex = 1;
+    }
     TravelDao.fetch(widget.travelUrl ?? _TRAVEL_URL,
             widget.groupChannelCode ?? "RX-OMF", pageIndex, pageSize)
         .then((travelItemModel) {
